@@ -12,10 +12,10 @@ uniform float timeFactor;
 
 
 void main() {
-    vec4 color = texture2D(waterTex, vTextureCoord + timeFactor * (0.01, -0.01));
-	vec4 map = texture2D(waterMap, vec2(0.0,0.1) + vTextureCoord + timeFactor*(0.01, -0.01));
+    vec4 color = texture2D(waterTex, vTextureCoord + timeFactor * vec2(0.1, 0.1));
+	vec4 map = texture2D(waterMap, vTextureCoord + timeFactor * vec2(0.1, 0.1));
 
-    color=vec4(color.r-map.r+0.4, color.g-map.g+0.4, color.b-map.b+0.4, 1.0);
+   
 	
-	gl_FragColor = color;
+	gl_FragColor = color*0.8 + map*0.2;
 }

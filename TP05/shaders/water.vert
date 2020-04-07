@@ -11,8 +11,8 @@ uniform mat4 uPMatrix;
 uniform mat4 uNMatrix;
 
 varying vec2 vTextureCoord;
+varying vec4 shade;
 
-uniform sampler2D waterTex;
 uniform sampler2D waterMap;
 
 uniform float timeFactor;
@@ -20,11 +20,11 @@ uniform float timeFactor;
 void main() {
 
     vTextureCoord = aTextureCoord;
-    vec4 watermap = texture2D(waterMap, vec2(0.0, 0.1) + vTextureCoord+timeFactor*(0.01,0.01));
-    vec4 watertex = texture2D(waterTex, vTextureCoord+timeFactor*(0.01,0.01));     //moving the color
 
-
-    vec3 offset = aVertexNormal*0.01*watermap.b;
+    vec3 offset = aVertexNormal*texture2D(waterMap, fract(vTextureCoord + timeFactor*vec2(0.1, 0.1))).b*0.05;
+    
+    shade = vec4(aVertexPosition+offset, 1.0);
 
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition + offset, 1.0);
+
 }
